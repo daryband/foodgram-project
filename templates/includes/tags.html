@@ -1,0 +1,12 @@
+{% load user_filters %}
+
+<ul class="tags">
+    {% for tag in tags %}
+        <li class="tags__item">
+            <a id="{{ tag.slug }}"
+               class="{{ tag.slug|get_tag_css }}{% if tag.pk in checked_tags %} tags__checkbox_active{% endif %}"
+               href="{{ url }}?checked_tags={{ checked_tags|query:tag.pk }}"></a>
+            <span class="tags__label"> {{ tag }}</span>
+        </li>
+    {% endfor %}
+</ul>

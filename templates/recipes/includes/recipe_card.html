@@ -1,0 +1,42 @@
+<div class="card" data-id="{{ recipe.id }}">
+    {% load user_filters %}
+    {% load thumbnail %}
+    {% thumbnail recipe.image "361x240" crop="center" upscale=True as im %}
+        <a href="{% url 'recipe' recipe.id %}" class="link" target="_blank"><img src={{ im.url }} alt="image"
+                                                                                 class="card__image"/></a>
+    {% endthumbnail %}
+    <div class="card__body">
+        <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.name }}</a>
+        <ul class="card__items">
+            {% for tag in recipe.tags.all %}
+                <li class="card__item"><span class="{{ tag.slug|badge_class }}">{{ tag }}</span></li>
+            {% endfor %}
+        </ul>
+        <div class="card__items card__items_column">
+            <p class="card__text"><span class="icon-time"></span> {{ recipe.time }} min.</p>
+            <p class="card__text"><span class="icon-user"></span> <a href="{% url 'profile' recipe.author.username %}"
+                                                                     style="color: black">{{ recipe.author }}</a>
+            </p>
+        </div>
+    </div>
+    <div class="card__footer">
+        {% if user.is_authenticated %}
+            {% if recipe|purchase:user %}
+                <button class="button button_style_light-blue" name="purchases"><span
+                        class="icon-check button__icon"></span>Already added
+                </button>
+            {% else %}
+                <button class="button button_style_light-blue" name="purchases" data-out><span
+                        class="icon-plus button__icon"></span>Add to shopping list
+                </button>
+            {% endif %}
+            {% if recipe|favorite:user %}
+                <button class="button button_style_none" name="favorites"><span
+                        class="icon-favorite icon-favorite_active"></span></button>
+            {% else %}
+                <button class="button button_style_none" name="favorites" data-out><span
+                        class="icon-favorite"></span></button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

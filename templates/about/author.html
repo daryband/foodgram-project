@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Автор{% endblock %}
+{% block static %} {% static 'pages/index.css'%} {% endblock %}
+
+
+{% block content %}
+    <img src='{% static 'images/una.jpg' %}' style="width: 600px; height: 450px;" alt="author">
+{% endblock %}

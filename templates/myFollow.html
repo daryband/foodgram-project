@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My feed{% endblock %}
+{% block static %} {% static 'pages/myFollow.css' %} {% endblock %}
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">My feed</h1>
+    </div>
+    <div class="card-list">
+        {% for author in page %}
+            {% include 'recipes/includes/author_card.html' with author=author authors_data=authors_data %}
+        {% endfor %}
+    </div>
+
+    {% if paginator.count > 0 %}
+        {% include 'includes/paginator.html' with items=page paginator=paginator %}
+    {% endif %}
+
+    <script src='{% static 'js/components/MainCards.js' %}'></script>
+    <script src='{% static 'js/components/MyFollow.js' %}'></script>
+    <script src='{% static 'js/components/Subscribe.js' %}'></script>
+    <script src='{% static 'js/config/config.js' %}'></script>
+    <script src='{% static 'js/components/Header.js' %}'></script>
+    <script src='{% static 'js/api/Api.js' %}'></script>
+    <script src='{% static 'myFollow.js' %}'></script>
+
+{% endblock %}
